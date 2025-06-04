@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  actions: read
+  contents: read
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -24,14 +28,6 @@ jobs:
 
       - name: Run Postman Tests
         run: |
-          newman run postman/apitest.json \
-    
-            --reporters cli,junit \
-            --reporter-junit-export test-results.xml
-
-      - name: Upload Test Results
-        if: always()
-        uses: actions/upload-artifact@v2
-        with:
-          name: postman-test-results
-          path: test-results.xml
+          newman run postman/apitest.json 
+      
+      
