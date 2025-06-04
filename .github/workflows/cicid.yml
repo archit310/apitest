@@ -31,8 +31,9 @@ jobs:
       - name: Run Postman Tests
         run: |
           newman run postman/apitest.json \
-          --reporters cli,html \
-          --reporter-html-export newman-report.html
+          --reporters cli,html,json \
+          --reporter-html-export newman-report.html \
+          --reporter-json-export newman-report.json
           
       - name: Upload HTML Report
         if: always()
@@ -40,6 +41,14 @@ jobs:
         with:
           name: postman-html-report
           path: newman-report.html
+
+      - name: Upload JSON Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: postman-json-report
+          path: newman-report.json
+
 
       - name: Send Report via Email
         uses: dawidd6/action-send-mail@v3
